@@ -1,0 +1,18 @@
+mainClassName = 'com.com.laowengs.zuul.ZuulApplication'
+springBoot {
+    mainClassName = 'com.com.laowengs.zuul.ZuulApplication'
+    buildInfo {
+        properties {
+            artifact = 'zuul'
+            version = '1.0.0'
+            group = 'com.com.laowengs'
+            name = 'zuul'
+        }
+    }
+}
+bootJar {
+    classifier = 'boot'
+}
+dependencies {
+    compile('org.springframework.cloud:spring-cloud-starter-netflix-zuul')
+}
