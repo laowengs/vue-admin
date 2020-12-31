@@ -1,0 +1,50 @@
+server:
+  port: 9002 #指定运行端口
+logging:
+  file:
+    name: logs/${spring.cloud.client.ip-address}/${spring.application.name}.log
+    path: logs
+  level:
+    root: INFO
+spring:
+  application:
+    name: zuul-proxy #指定服务名称
+  thymeleaf:
+    enabled: true
+    cache: true
+    encoding: UTF-8
+    prefix: classpath:/templates/
+    check-template-location: true
+    mode: HTML
+    suffix: .html
+eureka:
+  instance:
+    hostname: ${spring.cloud.client.ip-address}  #指定主机地址
+    instance-id:  ${spring.cloud.client.ip-address}:${server.port}
+    prefer-ip-address: true
+  client:
+    fetch-registry: true #指定是否要从注册中心获取服务（注册中心不需要开启）
+    register-with-eureka: true #指定是否要注册到注册中心（注册中心不需要开启）
+    service-url:
+      defaultZone: http://wengjp:wengjp123@127.0.0.1:9001/eureka
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+zuul:
+  add-host-header: false #设置为true重定向是会添加host请求头
+  prefix: /access #路由前缀
+hystrix:
+  command: #用于控制HystrixCommand的行为
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 1000 #配置HystrixCommand执行的超时时间，执行超过该时间会进行服务降级处理
+            ribbon:
+              ReadTimeout: 60000
+              ConnectTimeout: 60000
