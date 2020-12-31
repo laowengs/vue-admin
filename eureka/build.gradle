@@ -1,15 +1,3 @@
-mainClassName = 'com.laowengs.eureka.EurekaApplication'
-springBoot {
-    mainClassName = 'com.laowengs.eureka.EurekaApplication'
-    buildInfo {
-        properties {
-            artifact = 'eureka'
-            version = '1.0.0'
-            group = 'com.laowengs'
-            name = 'eureka'
-        }
-    }
-}
 dependencies {
     compile 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-server'
 }
