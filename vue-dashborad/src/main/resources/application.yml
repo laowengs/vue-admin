@@ -1,0 +1,40 @@
+server:
+  port: 9004 #指定运行端口
+logging:
+  file:
+    name: logs/${spring.cloud.client.ip-address}/${spring.application.name}.log
+    path: logs
+  level:
+    root: INFO
+spring:
+  application:
+    name: vue-dashboard #指定服务名称
+  thymeleaf:
+    enabled: true
+    cache: false
+    encoding: UTF-8
+    prefix: classpath:/templates/
+    check-template-location: true
+    mode: HTML
+    suffix: .html
+eureka:
+  instance:
+    hostname: ${spring.cloud.client.ip-address}  #指定主机地址
+    instance-id:  ${spring.cloud.client.ip-address} :${server.port}
+    prefer-ip-address: true
+  client:
+    fetch-registry: true #指定是否要从注册中心获取服务（注册中心不需要开启）
+    register-with-eureka: true #指定是否要注册到注册中心（注册中心不需要开启）
+    service-url:
+      defaultZone: http://wengjp:wengjp123@127.0.0.1:9001/eureka
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - '*'
+  endpoint:
+    health:
+      show-details: always
+#http://127.0.0.1:8081/actuator/hystrix.stream
+#http://127.0.0.1:8081/hystrix 后台页面

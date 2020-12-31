@@ -1,0 +1,17 @@
+mainClassName = 'ccom.laowengs.hystrix.HystrixDashBoardApplication'
+springBoot {
+    mainClassName = 'com.laowengs.hystrix.HystrixDashBoardApplication'
+    buildInfo {
+        properties {
+            artifact = 'hystrix-dashborad'
+            version = '1.0.0'
+            group = 'com.laowengs'
+            name = 'hystrix-dashborad'
+        }
+    }
+}
+dependencies {
+    compile 'org.springframework.cloud:spring-cloud-starter-netflix-hystrix'
+    compile 'org.springframework.cloud:spring-cloud-starter-netflix-hystrix-dashboard'
+    compile 'org.springframework.cloud:spring-cloud-starter-netflix-turbine'
+}

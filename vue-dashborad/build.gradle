@@ -1,0 +1,15 @@
+mainClassName = 'ccom.laowengs.vuedashboard.DashBoardApplication'
+springBoot {
+    mainClassName = 'com.laowengs.vuedashboard.DashBoardApplication'
+    buildInfo {
+        properties {
+            artifact = 'vue-dashborad'
+            version = '1.0.0'
+            group = 'com.laowengs'
+            name = 'vue-dashborad'
+        }
+    }
+}
+dependencies {
+    compile 'org.springframework.cloud:spring-cloud-starter-netflix-hystrix'
+}

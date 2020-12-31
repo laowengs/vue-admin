@@ -1,0 +1,34 @@
+server:
+  port: 9001 #指定运行端口
+logging:
+  file:
+    name: logs/${spring.cloud.client.ip-address}/${spring.application.name}.log
+    path: logs
+  level:
+    root: INFO
+spring:
+  application:
+    name: eureka-server #指定服务名称
+  security:
+    user:
+      name: wengjp
+      password: wengjp123
+eureka:
+  instance:
+    hostname: ${spring.cloud.client.ip-address}  #指定主机地址
+    instance-id:  ${spring.cloud.client.ip-address}:${server.port}
+  client:
+    fetch-registry: false #指定是否要从注册中心获取服务（注册中心不需要开启）
+    register-with-eureka: false #指定是否要注册到注册中心（注册中心不需要开启）
+    service-url:
+      defaultZone: http://wengjp:wengjp123@127.0.0.1:9001/eureka
+  server:
+    enable-self-preservation: false  #保护模式是否开启
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
