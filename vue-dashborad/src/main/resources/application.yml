@@ -39,5 +39,3 @@ management:
   endpoint:
     health:
       show-details: always
-#http://127.0.0.1:8081/actuator/hystrix.stream
-#http://127.0.0.1:8081/hystrix 后台页面
