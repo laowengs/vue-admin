@@ -3,4 +3,5 @@ include 'eureka'
 include 'zuul'
 include 'vue-dashborad'
 include 'hystrix-dashborad'
+include 'alibaba-client'
 
