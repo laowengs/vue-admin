@@ -1,7 +1,7 @@
 buildscript {
     ext {
         set('springCloudVersion', "Hoxton.SR9")
-        set('springBootVersion', "2.2.2.RELEASE")
+        set('springBootVersion', "2.3.7.RELEASE")
         set('springCloudAlibabaVersion', "2.2.1.RELEASE")
         set('springBootManagementVersion', "1.0.8.RELEASE'")
     }
@@ -44,7 +44,6 @@ subprojects {
     }
     dependencies {
         compile(
-                'org.springframework.boot:spring-boot-starter-web',
                 'org.springframework.boot:spring-boot-starter-tomcat',
                 'org.springframework.boot:spring-boot-starter-actuator',
                 'org.springframework.cloud:spring-cloud-starter',

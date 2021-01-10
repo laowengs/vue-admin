@@ -1,4 +1,4 @@
-package client;
+package com.laowengs.gateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,9 +6,9 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-public class AlibabaApplication {
+public class GateWayApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(AlibabaApplication.class,args);
+        SpringApplication.run(GateWayApplication.class, args);
     }
 }
