@@ -1,7 +1,5 @@
-
 dependencies {
     compile 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
-    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.springframework.cloud:spring-cloud-starter-gateway'
     compile 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
-    compile 'com.alibaba.boot:nacos-config-spring-boot-starter:0.2.7'
 }

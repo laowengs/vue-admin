@@ -1,5 +1,5 @@
 server:
-  port: 9007 #指定运行端口
+  port: 9004 #指定运行端口
 logging:
   file:
     name: logs/${spring.cloud.client.ip-address}/${spring.application.name}.log
@@ -8,7 +8,7 @@ logging:
     root: INFO
 spring:
   application:
-    name: alibaba-client #指定服务名称
+    name: gateway-proxy #指定服务名称
   thymeleaf:
     enabled: true
     cache: false
@@ -20,8 +20,24 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 134.175.56.208:8848
-
+        server-addr: wengjp.local:8848
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: product-service
+          uri: lb://product-service
+          predicates:
+            - Path=/product/**
+        - id: account-service
+          uri: lb://account-service
+          predicates:
+            - Path=/account/**
+        - id: order-service
+          uri: lb://order-service
+          predicates:
+            - Path=/order/**
 #eureka:
 #  instance:
 #    hostname: ${spring.cloud.client.ip-address}  #指定主机地址
@@ -35,6 +51,7 @@ spring:
 #    service-url:
 #      defaultZone: http://wengjp:wengjp123@127.0.0.1:9001/eureka
 #    registry-fetch-interval-seconds: 30 #从注册中心获取其他服务信息的间隔时间，默认30
+
 management:
   endpoints:
     web:
