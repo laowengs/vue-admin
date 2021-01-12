@@ -1,5 +1,5 @@
 server:
-  port: 9004 #指定运行端口
+  port: 9005 #指定运行端口
 logging:
   file:
     name: logs/${spring.cloud.client.ip-address}/${spring.application.name}.log

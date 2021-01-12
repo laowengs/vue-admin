@@ -52,7 +52,14 @@ public class UserLoginController {
                return Result.getInstance(0,"success","admin-admin");
            }
         }
-        return Result.getInstance(-1,"no login or login timeout",null);
+        return Result.getInstance(0,"no login or login timeout",null);
+    }
+
+    @RequestMapping(value = "/cleanLoginInfo",method = RequestMethod.GET)
+    @ResponseBody
+    public Result<Object> cleanLoginInfo(){
+        tokenInfo.clear();
+        return null;
     }
 
 }
