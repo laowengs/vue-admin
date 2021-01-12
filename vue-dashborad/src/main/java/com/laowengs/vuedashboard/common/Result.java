@@ -2,7 +2,7 @@ package com.laowengs.vuedashboard.common;
 
 public class Result<T> {
     private int code;
-    private String msg;
+    private String message;
     private T data;
 
     public int getCode() {
@@ -13,12 +13,12 @@ public class Result<T> {
         this.code = code;
     }
 
-    public String getMsg() {
-        return msg;
+    public String getMessage() {
+        return message;
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public T getData() {
@@ -33,7 +33,7 @@ public class Result<T> {
     public String toString() {
         return "Result{" +
                 "code=" + code +
-                ", msg='" + msg + '\'' +
+                ", msg='" + message + '\'' +
                 ", data=" + data +
                 '}';
     }
@@ -42,7 +42,7 @@ public class Result<T> {
         Result<T> result = new Result<>();
         result.setCode(code);
         result.setData(data);
-        result.setMsg(msg);
+        result.setMessage(msg);
         return result;
     }
 }

@@ -1,6 +1,6 @@
 package com.laowengs.vuedashboard.vo;
 
-public class LoginInfo {
+public class LoginInput {
     private String username;
     private String password;
 
