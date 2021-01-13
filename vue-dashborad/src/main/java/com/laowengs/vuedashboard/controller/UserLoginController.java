@@ -42,11 +42,11 @@ public class UserLoginController {
     }
 
 
-    @RequestMapping(value = "/isLogin",method = RequestMethod.GET)
+    @RequestMapping(value = "/getInfo",method = RequestMethod.GET)
     @ResponseBody
-    public Result<Object> isLogin(HttpServletRequest httpServletRequest){
+    public Result<Object> getInfo(HttpServletRequest httpServletRequest){
         String loginToken = httpServletRequest.getHeader("X-Token");
-        logger.info("接受到参数loginToken："+loginToken);
+        logger.info("getInfo 接受到参数loginToken："+loginToken);
         if(!StringUtils.isBlank(loginToken)){
            if(tokenInfo.containsKey(loginToken)){
                return Result.getInstance(0,"success","admin-admin");
@@ -55,11 +55,13 @@ public class UserLoginController {
         return Result.getInstance(0,"no login or login timeout",null);
     }
 
-    @RequestMapping(value = "/cleanLoginInfo",method = RequestMethod.GET)
+    @RequestMapping(value = "/logout",method = RequestMethod.GET)
     @ResponseBody
-    public Result<Object> cleanLoginInfo(){
-        tokenInfo.clear();
-        return null;
+    public Result<Object> logout(HttpServletRequest httpServletRequest){
+        String loginToken = httpServletRequest.getHeader("X-Token");
+        logger.info("logout 接受到参数loginToken："+loginToken);
+        tokenInfo.remove(loginToken);
+        return Result.getInstance(0,"success",null);
     }
 
 }
