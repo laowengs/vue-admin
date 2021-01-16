@@ -28,7 +28,7 @@ eureka:
     fetch-registry: true #指定是否要从注册中心获取服务（注册中心不需要开启）
     register-with-eureka: true #指定是否要注册到注册中心（注册中心不需要开启）
     service-url:
-      defaultZone: http://wengjp:wengjp123@127.0.0.1:9001/eureka
+      defaultZone: http://wengjp:wengjp123@wengjp.local:9001/eureka
     registry-fetch-interval-seconds: 30 #从注册中心获取其他服务信息的间隔时间，默认30
 management:
   endpoints:
