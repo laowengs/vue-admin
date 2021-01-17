@@ -14,19 +14,20 @@ public class MenuController {
     @RequestMapping("/getMenuInfo")
     public Result<List<MenuInfo>> getMenuInfo(){
         List<MenuInfo> menuInfos = new ArrayList<>();
+        MenuInfo rootMenuInfo = new MenuInfo(0);
         MenuInfo exampleMenuInfo = new MenuInfo(1);
         exampleMenuInfo.addChildMenu(new MenuInfo(11));
         exampleMenuInfo.addChildMenu(new MenuInfo(12));
 
         MenuInfo formMenuInfo = new MenuInfo(2);
-
+        formMenuInfo.addChildMenu(new MenuInfo(21));
         MenuInfo nestedMenuInfo = new MenuInfo(3);
         MenuInfo menu1MenuInfo = new MenuInfo(31);
         MenuInfo menu1_1MenuInfo = new MenuInfo(311);
         MenuInfo menu1_2MenuInfo = new MenuInfo(312);
-        MenuInfo menu1_2_1MenuInfo = new MenuInfo(3121);
+//        MenuInfo menu1_2_1MenuInfo = new MenuInfo(3121);
         MenuInfo menu1_2_2MenuInfo = new MenuInfo(3122);
-        menu1_2MenuInfo.addChildMenu(menu1_2_1MenuInfo);
+//        menu1_2MenuInfo.addChildMenu(menu1_2_1MenuInfo);
         menu1_2MenuInfo.addChildMenu(menu1_2_2MenuInfo);
 
         MenuInfo menu1_3MenuInfo = new MenuInfo(313);
@@ -39,9 +40,13 @@ public class MenuController {
         nestedMenuInfo.addChildMenu(menu1MenuInfo);
         nestedMenuInfo.addChildMenu(menu2MenuInfo);
 
+        menuInfos.add(rootMenuInfo);
         menuInfos.add(exampleMenuInfo);
         menuInfos.add(formMenuInfo);
         menuInfos.add(nestedMenuInfo);
+        MenuInfo e = new MenuInfo(4);
+        e.addChildMenu(new MenuInfo(41));
+        menuInfos.add(e);
 
 
         return Result.getInstance(0,"success",menuInfos);
