@@ -109,7 +109,7 @@ public class WebSocketServer {
         }
     }
 
-    public static synchronized long getOnlineCount() {
+    public static long getOnlineCount() {
         return webSocketSessionMap.size();
     }
 
