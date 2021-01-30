@@ -5,4 +5,5 @@ include 'vue-dashborad'
 include 'hystrix-dashborad'
 include 'alibaba-client'
 include 'gateway'
+include 'web-socket'
 

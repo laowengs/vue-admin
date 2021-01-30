@@ -47,7 +47,11 @@ subprojects {
                 'org.springframework.boot:spring-boot-starter-tomcat',
                 'org.springframework.boot:spring-boot-starter-actuator',
                 'org.springframework.cloud:spring-cloud-starter',
-                'com.google.guava:guava:23.0'
+                //APACHE COMMON
+                'org.apache.commons:commons-lang3:3.11',
+                //guava
+                'com.google.guava:guava:30.1-jre',
+                'com.alibaba:fastjson:1.2.58'
         )
         testCompile(
                 "org.springframework:spring-test",
