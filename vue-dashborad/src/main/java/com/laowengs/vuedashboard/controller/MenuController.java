@@ -46,8 +46,11 @@ public class MenuController {
         menuInfos.add(nestedMenuInfo);
         MenuInfo e = new MenuInfo(4);
         e.addChildMenu(new MenuInfo(41));
+
         menuInfos.add(e);
 
+        MenuInfo dockerMenu = new MenuInfo(5);
+        menuInfos.add(dockerMenu);
 
         return Result.getInstance(0,"success",menuInfos);
     }
