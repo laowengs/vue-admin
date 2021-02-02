@@ -3,9 +3,12 @@ package com.laowengs.vuedashboard.controller;
 import com.laowengs.vuedashboard.common.Result;
 import com.laowengs.vuedashboard.vo.LoginInput;
 import com.laowengs.vuedashboard.vo.LoginOutput;
+import com.laowengs.vuedashboard.vueadmindb.dao.VueUserDao;
+import com.laowengs.vuedashboard.vueadmindb.po.VueUser;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,6 +25,13 @@ public class UserLoginController {
     private Logger logger = LoggerFactory.getLogger(UserLoginController.class);
     private ConcurrentHashMap<String,Object> tokenInfo = new ConcurrentHashMap<>(1024);
 
+    private VueUserDao userDao;
+
+    @Autowired
+    public UserLoginController(VueUserDao userDao) {
+        this.userDao = userDao;
+    }
+
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     @ResponseBody
     public Result<LoginOutput> loginPost(@RequestBody LoginInput loginInput){
@@ -33,12 +43,16 @@ public class UserLoginController {
         if(StringUtils.isBlank(password)){
             return Result.getInstance(-1,"password is null",null);
         }
-        if("admin".equals(username) && "admin".equals(password)){
-            String token = UUID.randomUUID().toString().replace("-","");
-            tokenInfo.putIfAbsent(token,new Object());
-            return Result.getInstance(0,"success",LoginOutput.getInstance(token));
+        VueUser vueUser = userDao.selectByUsernameAndPassword(username, password);
+        if(vueUser == null){
+            return Result.getInstance(-1,"auth failed,password error",null);
         }
-        return Result.getInstance(-1,"auth failed",null);
+        if(vueUser.getStatus() != 0){
+            return Result.getInstance(-1,"auth failed,user status error",null);
+        }
+        String token = UUID.randomUUID().toString().replace("-", "");
+        tokenInfo.putIfAbsent(token, new Object());
+        return Result.getInstance(0, "success", LoginOutput.getInstance(token));
     }
 
 

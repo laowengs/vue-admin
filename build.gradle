@@ -44,7 +44,6 @@ subprojects {
     }
     dependencies {
         compile(
-                'org.springframework.boot:spring-boot-starter-tomcat',
                 'org.springframework.boot:spring-boot-starter-actuator',
                 'org.springframework.cloud:spring-cloud-starter',
                 //APACHE COMMON

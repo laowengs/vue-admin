@@ -2,4 +2,9 @@ dependencies {
     compile 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
     compile 'org.springframework.cloud:spring-cloud-starter-netflix-hystrix'
     compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'mysql:mysql-connector-java:5.1.32'
+    compile 'org.mybatis:mybatis:3.5.6'
+    compile 'com.alibaba:druid:1.1.23'
+    compile ('org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.4')
+    compile ('org.mybatis.spring.boot:mybatis-spring-boot-autoconfigure:2.1.4')
 }

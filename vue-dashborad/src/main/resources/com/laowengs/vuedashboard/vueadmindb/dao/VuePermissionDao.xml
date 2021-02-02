@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.laowengs.vuedashboard.vueadmindb.dao.VuePermissionDao">
+  <resultMap id="BaseResultMap" type="com.laowengs.vuedashboard.vueadmindb.po.VuePermission">
+    <id column="permission_id" jdbcType="BIGINT" property="permissionId" />
+    <result column="permission_name" jdbcType="VARCHAR" property="permissionName" />
+    <result column="permission_desc" jdbcType="VARCHAR" property="permissionDesc" />
+    <result column="permission_type" jdbcType="INTEGER" property="permissionType" />
+    <result column="parent_permission_id" jdbcType="BIGINT" property="parentPermissionId" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="status_date" jdbcType="TIMESTAMP" property="statusDate" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    permission_id, permission_name, permission_desc, permission_type, parent_permission_id, 
+    create_date, status_date, `status`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from vue_permission
+    where permission_id = #{permissionId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from vue_permission
+    where permission_id = #{permissionId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="permission_id" keyProperty="permissionId" parameterType="com.laowengs.vuedashboard.vueadmindb.po.VuePermission" useGeneratedKeys="true">
+    insert into vue_permission (permission_name, permission_desc, permission_type, 
+      parent_permission_id, create_date, status_date, 
+      `status`)
+    values (#{permissionName,jdbcType=VARCHAR}, #{permissionDesc,jdbcType=VARCHAR}, #{permissionType,jdbcType=INTEGER}, 
+      #{parentPermissionId,jdbcType=BIGINT}, #{createDate,jdbcType=TIMESTAMP}, #{statusDate,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" keyColumn="permission_id" keyProperty="permissionId" parameterType="com.laowengs.vuedashboard.vueadmindb.po.VuePermission" useGeneratedKeys="true">
+    insert into vue_permission
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="permissionName != null">
+        permission_name,
+      </if>
+      <if test="permissionDesc != null">
+        permission_desc,
+      </if>
+      <if test="permissionType != null">
+        permission_type,
+      </if>
+      <if test="parentPermissionId != null">
+        parent_permission_id,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="statusDate != null">
+        status_date,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="permissionName != null">
+        #{permissionName,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionDesc != null">
+        #{permissionDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionType != null">
+        #{permissionType,jdbcType=INTEGER},
+      </if>
+      <if test="parentPermissionId != null">
+        #{parentPermissionId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+        #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.laowengs.vuedashboard.vueadmindb.po.VuePermission">
+    update vue_permission
+    <set>
+      <if test="permissionName != null">
+        permission_name = #{permissionName,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionDesc != null">
+        permission_desc = #{permissionDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionType != null">
+        permission_type = #{permissionType,jdbcType=INTEGER},
+      </if>
+      <if test="parentPermissionId != null">
+        parent_permission_id = #{parentPermissionId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+        status_date = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where permission_id = #{permissionId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.laowengs.vuedashboard.vueadmindb.po.VuePermission">
+    update vue_permission
+    set permission_name = #{permissionName,jdbcType=VARCHAR},
+      permission_desc = #{permissionDesc,jdbcType=VARCHAR},
+      permission_type = #{permissionType,jdbcType=INTEGER},
+      parent_permission_id = #{parentPermissionId,jdbcType=BIGINT},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      status_date = #{statusDate,jdbcType=TIMESTAMP},
+      `status` = #{status,jdbcType=INTEGER}
+    where permission_id = #{permissionId,jdbcType=BIGINT}
+  </update>
+</mapper>
