@@ -2,6 +2,8 @@ package com.laowengs.vuedashboard.vueadmindb.dao;
 
 import com.laowengs.vuedashboard.vueadmindb.po.VueUser;
 
+import java.util.List;
+
 public interface VueUserDao {
     int deleteByPrimaryKey(Long userId);
 
@@ -16,4 +18,6 @@ public interface VueUserDao {
     int updateByPrimaryKey(VueUser record);
 
     VueUser selectByUsernameAndPassword(String username,String password);
+
+    List<VueUser> selectAll();
 }

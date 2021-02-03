@@ -2,6 +2,8 @@ package com.laowengs.vuedashboard.vueadmindb.dao;
 
 import com.laowengs.vuedashboard.vueadmindb.po.VueUserRole;
 
+import java.util.List;
+
 public interface VueUserRoleDao {
     int deleteByPrimaryKey(Long userRoleId);
 
@@ -14,4 +16,6 @@ public interface VueUserRoleDao {
     int updateByPrimaryKeySelective(VueUserRole record);
 
     int updateByPrimaryKey(VueUserRole record);
+
+    List<VueUserRole> selectByUserId(Long userId);
 }

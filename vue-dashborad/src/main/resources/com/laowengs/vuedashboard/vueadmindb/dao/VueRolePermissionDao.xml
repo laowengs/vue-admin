@@ -95,4 +95,12 @@
       `status` = #{status,jdbcType=INTEGER}
     where role_permission_id = #{rolePermissionId,jdbcType=BIGINT}
   </update>
+
+
+  <select id="selectByRoleId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from vue_role_permission
+    where role_id = #{roleId} and status = 0
+  </select>
 </mapper>

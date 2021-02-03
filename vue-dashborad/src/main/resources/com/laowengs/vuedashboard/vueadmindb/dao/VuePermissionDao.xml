@@ -120,4 +120,11 @@
       `status` = #{status,jdbcType=INTEGER}
     where permission_id = #{permissionId,jdbcType=BIGINT}
   </update>
+  <select id="selectByParentPermissionId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from vue_permission
+    where parent_permission_id = #{permissionId,jdbcType=BIGINT}
+  </select>
+
 </mapper>

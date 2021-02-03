@@ -2,6 +2,8 @@ package com.laowengs.vuedashboard.vueadmindb.dao;
 
 import com.laowengs.vuedashboard.vueadmindb.po.VueRolePermission;
 
+import java.util.List;
+
 public interface VueRolePermissionDao {
     int deleteByPrimaryKey(Long rolePermissionId);
 
@@ -14,4 +16,6 @@ public interface VueRolePermissionDao {
     int updateByPrimaryKeySelective(VueRolePermission record);
 
     int updateByPrimaryKey(VueRolePermission record);
+
+    List<VueRolePermission> selectByRoleId(Long roleId);
 }

@@ -102,4 +102,10 @@
     from vue_user
     where username = #{username,jdbcType=VARCHAR} and password = #{password,jdbcType=VARCHAR}
   </select>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from vue_user
+  </select>
 </mapper>
