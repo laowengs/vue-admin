@@ -28,13 +28,14 @@ public class MenuService {
         this.rolePermissionDao = rolePermissionDao;
     }
 
-    public List<MenuInfo> selectAllMenuInfoBySystemId(Long systemId) {
+    public List<MenuInfo> selectAllMenuInfoBySystemId(Long userId,Long systemId) {
         List<MenuInfo> menuInfos = new ArrayList<>();
         VuePermission vuePermission = permissionDao.selectByPrimaryKey(systemId);
         if (vuePermission != null) {
+            Set<Long> permissionSet = qryUserPermission(userId);
             List<VuePermission> permissions = permissionDao.selectByParentPermissionId(vuePermission.getPermissionId());
             for (VuePermission permission : permissions) {
-                MenuInfo menuInfo = buildMenuInfo(permission);
+                MenuInfo menuInfo = buildAllMenuInfo(permission,permissionSet);
                 if(menuInfo != null){
                     menuInfos.add(menuInfo);
                 }
@@ -43,21 +44,25 @@ public class MenuService {
         return menuInfos;
     }
 
-    public List<MenuInfo> selectMenuInfoByUserId(Long userId,Long systemId){
-        List<MenuInfo> menuInfos = new ArrayList<>();
-
-        Set<Long> permissionSet = new HashSet<>();
-        List<VueUserRole> vueUserRoles = userRoleDao.selectByUserId(userId);
-        if(vueUserRoles != null && !vueUserRoles.isEmpty()){
-            for (VueUserRole vueUserRole : vueUserRoles) {
-                List<VueRolePermission> vueRolePermissions = rolePermissionDao.selectByRoleId(vueUserRole.getRoleId());
-                if(vueRolePermissions != null && !vueRolePermissions.isEmpty()){
-                    for (VueRolePermission vueRolePermission : vueRolePermissions) {
-                        permissionSet.add(vueRolePermission.getPermissionId());
-                    }
+    private MenuInfo buildAllMenuInfo(VuePermission vuePermission, Set<Long> permissionSet) {
+        if (vuePermission != null) {
+            Long permissionId = vuePermission.getPermissionId();
+            MenuInfo menuInfo = new MenuInfo(permissionId, vuePermission.getPermissionName(), permissionSet.contains(permissionId) ? 1 : 0);
+            List<VuePermission> permissions = permissionDao.selectByParentPermissionId(permissionId);
+            for (VuePermission permission : permissions) {
+                MenuInfo childMenuInfo = buildAllMenuInfo(permission,permissionSet);
+                if(childMenuInfo != null){
+                    menuInfo.addChildMenu(childMenuInfo);
                 }
             }
+            return menuInfo;
         }
+        return null;
+    }
+
+    public List<MenuInfo> selectMenuInfoByUserId(Long userId,Long systemId){
+        List<MenuInfo> menuInfos = new ArrayList<>();
+        Set<Long> permissionSet = qryUserPermission(userId);
         VuePermission vuePermission = permissionDao.selectByPrimaryKey(systemId);
         if (vuePermission != null) {
             List<VuePermission> permissions = permissionDao.selectByParentPermissionId(vuePermission.getPermissionId());
@@ -70,8 +75,23 @@ public class MenuService {
                 }
             }
         }
-
         return menuInfos;
+    }
+
+    private Set<Long> qryUserPermission(Long userId) {
+        Set<Long> permissionSet = new HashSet<>();
+        List<VueUserRole> vueUserRoles = userRoleDao.selectByUserId(userId);
+        if(vueUserRoles != null && !vueUserRoles.isEmpty()){
+            for (VueUserRole vueUserRole : vueUserRoles) {
+                List<VueRolePermission> vueRolePermissions = rolePermissionDao.selectByRoleId(vueUserRole.getRoleId());
+                if(vueRolePermissions != null && !vueRolePermissions.isEmpty()){
+                    for (VueRolePermission vueRolePermission : vueRolePermissions) {
+                        permissionSet.add(vueRolePermission.getPermissionId());
+                    }
+                }
+            }
+        }
+        return permissionSet;
     }
 
     private MenuInfo buildMenuInfo(VuePermission vuePermission, Set<Long> permissionSet) {
@@ -79,9 +99,8 @@ public class MenuService {
             MenuInfo menuInfo = new MenuInfo(vuePermission.getPermissionId(),vuePermission.getPermissionName());
             List<VuePermission> permissions = permissionDao.selectByParentPermissionId(vuePermission.getPermissionId());
             for (VuePermission permission : permissions) {
-
                 if(permissionSet.contains(permission.getPermissionId())){
-                    MenuInfo childMenuInfo = buildMenuInfo(permission);
+                    MenuInfo childMenuInfo = buildMenuInfo(permission,permissionSet);
                     if(childMenuInfo != null){
                         menuInfo.addChildMenu(childMenuInfo);
                     }
@@ -91,19 +110,5 @@ public class MenuService {
         }
         return null;
     }
-    private MenuInfo buildMenuInfo(VuePermission vuePermission) {
-        if (vuePermission != null) {
-            Long permissionId = vuePermission.getPermissionId();
-            MenuInfo menuInfo = new MenuInfo(permissionId, vuePermission.getPermissionName());
-            List<VuePermission> permissions = permissionDao.selectByParentPermissionId(permissionId);
-            for (VuePermission permission : permissions) {
-                MenuInfo childMenuInfo = buildMenuInfo(permission);
-                if(childMenuInfo != null){
-                    menuInfo.addChildMenu(childMenuInfo);
-                }
-            }
-            return menuInfo;
-        }
-        return null;
-    }
+
 }

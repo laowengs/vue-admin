@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -23,7 +22,7 @@ public class MenuController {
 
     @RequestMapping("/getAllMenuInfo")
     public Result<List<MenuInfo>> getAllMenuInfo(){
-        return Result.getInstance(0,"success",menuService.selectAllMenuInfoBySystemId(1L));
+        return Result.getInstance(0,"success",menuService.selectAllMenuInfoBySystemId(1L,1L));
     }
 
     @RequestMapping("/getMenuInfo")
