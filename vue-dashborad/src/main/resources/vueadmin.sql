@@ -56,3 +56,6 @@ CREATE TABLE `vue_role_permission` (
                                        `status` INT NOT NULL DEFAULT '0' COMMENT '状态',
                                        PRIMARY KEY (`role_permission_id`)
 ) ENGINE = INNODB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4;
+
+
+alter table vue_permission add COLUMN display_order int not null DEFAULT 0 COMMENT '菜单展示顺序';

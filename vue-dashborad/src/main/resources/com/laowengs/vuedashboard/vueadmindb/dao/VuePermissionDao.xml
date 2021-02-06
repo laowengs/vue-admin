@@ -19,7 +19,7 @@
     select 
     <include refid="Base_Column_List" />
     from vue_permission
-    where permission_id = #{permissionId,jdbcType=BIGINT}
+    where permission_id = #{permissionId,jdbcType=BIGINT} order by display_order
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from vue_permission
@@ -124,7 +124,7 @@
     select
     <include refid="Base_Column_List" />
     from vue_permission
-    where parent_permission_id = #{permissionId,jdbcType=BIGINT}
+    where parent_permission_id = #{permissionId,jdbcType=BIGINT} order by display_order
   </select>
 
 </mapper>
