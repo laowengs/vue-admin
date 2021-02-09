@@ -2,9 +2,7 @@ package com.laowengs.vuedashboard.controller;
 
 import com.laowengs.vuedashboard.common.Result;
 import com.laowengs.vuedashboard.vueadmindb.dao.VueRoleDao;
-import com.laowengs.vuedashboard.vueadmindb.dao.VueUserDao;
 import com.laowengs.vuedashboard.vueadmindb.po.VueRole;
-import com.laowengs.vuedashboard.vueadmindb.po.VueUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +29,7 @@ public class RoleController {
     }
 
 
-    @RequestMapping(value = "",method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.PUT)
     public Result<Integer> addUser(@RequestBody VueRole role){
         return Result.getInstance(0,"success",  roleDao.insert(role));
     }
