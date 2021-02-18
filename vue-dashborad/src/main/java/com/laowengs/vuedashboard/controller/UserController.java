@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -33,7 +35,10 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public Result<Integer> addRolePermission(@RequestBody VueUser user){
+    public Result<Integer> addUser(@RequestBody VueUser user){
+        user.setCreateDate(new Date());
+        user.setStatusDate(new Date());
+        user.setStatus(0);
         return Result.getInstance(0,"success",  userDao.insert(user));
     }
 
@@ -84,4 +89,9 @@ public class UserController {
         return Result.getInstance(0,"success",null);
     }
 
+    @RequestMapping(method = RequestMethod.GET)
+    @ResponseBody
+    public Result<List<VueUser>> list(){
+        return Result.getInstance(0,"success",userDao.selectAll());
+    }
 }
