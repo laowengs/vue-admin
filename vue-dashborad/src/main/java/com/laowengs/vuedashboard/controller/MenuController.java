@@ -28,31 +28,26 @@ public class MenuController {
     }
 
     @RequestMapping("/getAllMenuInfo")
-    public Result<List<MenuInfo>> getAllMenuInfo(){
-        List<MenuInfo> data = null;
+    public Result<JSONArray> getAllMenuInfo(){
         if(!redisCall.exists(VUE_ALL_MENU)){
-            data = menuService.selectAllMenuInfoBySystemId(1L, 1L);
+            List<MenuInfo> data = menuService.selectAllMenuInfoBySystemId(1L, 1L);
             redisCall.setex(VUE_ALL_MENU,30 * 60, JSON.toJSONString(data));
-        }else {
-            String json = redisCall.get(VUE_ALL_MENU);
-            data = JSON.parseArray(json, MenuInfo.class);
         }
-
-
-        return Result.getInstance(0,"success", data);
+        String json = redisCall.get(VUE_ALL_MENU);
+        JSONArray jsonArray = JSON.parseArray(json);
+        return Result.getInstance(0,"success", jsonArray);
     }
 
     @RequestMapping("/getMenuInfo")
     public Result<JSONArray> getMenuInfo(){
-        List<MenuInfo> data = null;
         if(!redisCall.exists(VUE_USER_MENU_INFO)){
-            data = menuService.selectMenuInfoByUserId(1L, 1L);
+            List<MenuInfo> data = menuService.selectMenuInfoByUserId(1L, 1L);
             redisCall.setex(VUE_USER_MENU_INFO,30 * 60, JSON.toJSONString(data));
         }
         String json = redisCall.get(VUE_USER_MENU_INFO);
-        JSONArray jsonObject = JSONArray.parseArray(json);
+        JSONArray jsonArray = JSONArray.parseArray(json);
 
-        return Result.getInstance(0, "success", jsonObject);
+        return Result.getInstance(0, "success", jsonArray);
     }
 }
 
