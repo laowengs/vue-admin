@@ -1,6 +1,9 @@
 package com.laowengs.vuedashboard.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.laowengs.vuedashboard.common.Result;
+import com.laowengs.vuedashboard.redis.IRedisCall;
 import com.laowengs.vuedashboard.service.MenuService;
 import com.laowengs.vuedashboard.vo.MenuInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,20 +17,42 @@ import java.util.List;
 public class MenuController {
 
     private MenuService menuService;
+    private IRedisCall redisCall;
+    public static final String VUE_ALL_MENU ="VUE_ALL_MENU";
+    public static final String VUE_USER_MENU_INFO ="VUE_USER_MENU_INFO";
 
     @Autowired
-    public MenuController(MenuService menuService) {
+    public MenuController(MenuService menuService,IRedisCall redisCall) {
         this.menuService = menuService;
+        this.redisCall = redisCall;
     }
 
     @RequestMapping("/getAllMenuInfo")
     public Result<List<MenuInfo>> getAllMenuInfo(){
-        return Result.getInstance(0,"success",menuService.selectAllMenuInfoBySystemId(1L,1L));
+        List<MenuInfo> data = null;
+        if(!redisCall.exists(VUE_ALL_MENU)){
+            data = menuService.selectAllMenuInfoBySystemId(1L, 1L);
+            redisCall.setex(VUE_ALL_MENU,30 * 60, JSON.toJSONString(data));
+        }else {
+            String json = redisCall.get(VUE_ALL_MENU);
+            data = JSON.parseArray(json, MenuInfo.class);
+        }
+
+
+        return Result.getInstance(0,"success", data);
     }
 
     @RequestMapping("/getMenuInfo")
-    public Result<List<MenuInfo>> getMenuInfo(){
-        return Result.getInstance(0, "success", menuService.selectMenuInfoByUserId(1L, 1L));
+    public Result<JSONArray> getMenuInfo(){
+        List<MenuInfo> data = null;
+        if(!redisCall.exists(VUE_USER_MENU_INFO)){
+            data = menuService.selectMenuInfoByUserId(1L, 1L);
+            redisCall.setex(VUE_USER_MENU_INFO,30 * 60, JSON.toJSONString(data));
+        }
+        String json = redisCall.get(VUE_USER_MENU_INFO);
+        JSONArray jsonObject = JSONArray.parseArray(json);
+
+        return Result.getInstance(0, "success", jsonObject);
     }
 }
 

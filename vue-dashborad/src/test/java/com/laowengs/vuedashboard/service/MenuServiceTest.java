@@ -18,6 +18,6 @@ class MenuServiceTest {
 
     @Test
     void selectAllMenuInfoBySystemId() {
-        System.out.println(JSONObject.toJSONString(menuService.selectAllMenuInfoBySystemId(1L)));
+        System.out.println(JSONObject.toJSONString(menuService.selectAllMenuInfoBySystemId(1L,0L)));
     }
 }

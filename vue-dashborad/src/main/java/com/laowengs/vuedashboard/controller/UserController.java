@@ -1,6 +1,7 @@
 package com.laowengs.vuedashboard.controller;
 
 import com.laowengs.vuedashboard.common.Result;
+import com.laowengs.vuedashboard.token.IToken;
 import com.laowengs.vuedashboard.vo.LoginInput;
 import com.laowengs.vuedashboard.vo.LoginOutput;
 import com.laowengs.vuedashboard.vueadmindb.dao.VueUserDao;
@@ -19,19 +20,21 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
     private Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    private ConcurrentHashMap<String,Object> tokenInfo = new ConcurrentHashMap<>(1024);
+    private IToken tokenImpl;
     private VueUserDao userDao;
+    public static final String TOKEN_PREFIX = "VUE_TOKEN:";
+    public static final int TOKEN_EXPIRE_TIME = 30 * 60;
 
     @Autowired
-    public UserController(VueUserDao userDao) {
+    public UserController(VueUserDao userDao,IToken tokenImpl) {
         this.userDao = userDao;
+        this.tokenImpl = tokenImpl;
     }
 
     @RequestMapping(method = RequestMethod.PUT)
@@ -62,7 +65,7 @@ public class UserController {
             return Result.getInstance(-1,"auth failed,user status error",null);
         }
         String token = UUID.randomUUID().toString().replace("-", "");
-        tokenInfo.putIfAbsent(token, new Object());
+        tokenImpl.putTokenIfAbsent(TOKEN_PREFIX + token, "", TOKEN_EXPIRE_TIME);
         return Result.getInstance(0, "success", LoginOutput.getInstance(token));
     }
 
@@ -73,7 +76,7 @@ public class UserController {
         String loginToken = httpServletRequest.getHeader("X-Token");
         logger.info("getInfo 接受到参数loginToken："+loginToken);
         if(!StringUtils.isBlank(loginToken)){
-            if(tokenInfo.containsKey(loginToken)){
+            if(tokenImpl.existToken(TOKEN_PREFIX + loginToken)){
                 return Result.getInstance(0,"success","admin-admin");
             }
         }
@@ -85,7 +88,7 @@ public class UserController {
     public Result<Object> logout(HttpServletRequest httpServletRequest){
         String loginToken = httpServletRequest.getHeader("X-Token");
         logger.info("logout 接受到参数loginToken："+loginToken);
-        tokenInfo.remove(loginToken);
+        tokenImpl.delToken(TOKEN_PREFIX + loginToken);
         return Result.getInstance(0,"success",null);
     }
 
