@@ -6,6 +6,7 @@ logging:
     path: logs
   level:
     root: INFO
+    com.laowengs.vuedashboard.mybatis.RedisCache: DEBUG
 spring:
   application:
     name: vue-dashboard #指定服务名称

@@ -9,6 +9,7 @@
     <result column="status_date" jdbcType="TIMESTAMP" property="statusDate" />
     <result column="status" jdbcType="INTEGER" property="status" />
   </resultMap>
+<!--  <cache type="com.laowengs.vuedashboard.mybatis.RedisCache"></cache>-->
   <sql id="Base_Column_List">
     role_permission_id, role_id, permission_id, create_date, status_date, `status`
   </sql>
