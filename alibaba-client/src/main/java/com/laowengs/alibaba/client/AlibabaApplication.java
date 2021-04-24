@@ -8,7 +8,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableNacosConfig(globalProperties = @NacosProperties(serverAddr = "134.175.56.208:8848"))
+@EnableNacosConfig(globalProperties = @NacosProperties(serverAddr = "wengjp.local:8848"))
 public class AlibabaApplication {
 
     public static void main(String[] args) {
